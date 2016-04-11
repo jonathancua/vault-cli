@@ -9,7 +9,7 @@ import (
 
 func (s *Sys) AddInitStatusSub(c *cobra.Command) {
 	lookupCmd := &cobra.Command{
-		Use:   "initStatus",
+		Use:   "init-status",
 		Short: "Return the initialization status of a Vault.",
 		Long:  "Return the initialization status of a Vault.",
 		RunE: func(cmd *cobra.Command, args []string) error {
