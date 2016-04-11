@@ -1,6 +1,10 @@
 package commands
 
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 type TokenAuth struct {
 	*Cmd
@@ -20,4 +24,15 @@ func (root *Cmd) initTokenAuth() {
 
 	t.AddLookupSub(tokenCmd)
 	t.AddCommand(tokenCmd)
+}
+
+func (t *TokenAuth) CheckArgs(args []string) error {
+	switch {
+	case len(args) == 0:
+		return fmt.Errorf("Token must be specified")
+	case len(args) > 1:
+		return fmt.Errorf("Only one token allowed")
+	}
+
+	return nil
 }

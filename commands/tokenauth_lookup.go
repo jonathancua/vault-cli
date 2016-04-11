@@ -24,6 +24,10 @@ func (t *TokenAuth) AddLookupSub(c *cobra.Command) {
 }
 
 func (t *TokenAuth) Lookup(args []string) error {
+	if err := t.CheckArgs(args); err != nil {
+		return err
+	}
+
 	// This comes from vault.go > TokenAuth()
 	token, err := t.TokenAuth()
 	if err != nil {
