@@ -19,4 +19,10 @@ func (root *Cmd) initSys() {
 	}
 
 	s.AddInitStatusSub(sysCmd)
+	s.AddLeaderSub(sysCmd)
+	s.AddListAuthSub(sysCmd)
+	s.AddListAuditSub(sysCmd)
+	s.AddListMountsSub(sysCmd)
+	s.AddListPoliciesSub(sysCmd)
+	s.AddSealStatusSub(sysCmd)
 }

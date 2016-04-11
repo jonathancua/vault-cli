@@ -1,23 +1,22 @@
 package commands
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
 )
 
 func (s *Sys) AddInitStatusSub(c *cobra.Command) {
-	lookupCmd := &cobra.Command{
+	cmd := &cobra.Command{
 		Use:   "init-status",
-		Short: "Return the initialization status of a Vault.",
-		Long:  "Return the initialization status of a Vault.",
+		Short: "Return the initialization status of the Vault.",
+		Long:  "Return the initialization status of the Vault.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return s.InitStatus(args)
 		},
 	}
 
-	s.AddCommand(lookupCmd)
+	s.AddCommand(cmd)
 }
 
 func (s *Sys) InitStatus(args []string) error {
@@ -28,7 +27,6 @@ func (s *Sys) InitStatus(args []string) error {
 
 	result, err := sys.InitStatus()
 	if err != nil {
-		fmt.Println(err)
 		log.Fatal(err)
 	}
 

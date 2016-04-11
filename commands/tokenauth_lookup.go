@@ -11,7 +11,7 @@ import (
 // You need to set VAULT_TOKEN environment variables first
 // before this can work. And export VAULT_ADDR=http://localhost:8200/ .
 func (t *TokenAuth) AddLookupSub(c *cobra.Command) {
-	lookupCmd := &cobra.Command{
+	cmd := &cobra.Command{
 		Use:   "lookup <token>",
 		Short: "Display information about the specified token",
 		Long:  "Display information about the specified token",
@@ -20,7 +20,7 @@ func (t *TokenAuth) AddLookupSub(c *cobra.Command) {
 		},
 	}
 
-	c.AddCommand(lookupCmd)
+	c.AddCommand(cmd)
 }
 
 func (t *TokenAuth) Lookup(args []string) error {
