@@ -80,12 +80,17 @@ func (c *Cmd) Client() (*vaultapi.Client, error) {
 	}
 	client.SetToken(clientToken)
 
+	if configFile.vaultCaCert != "" {
+		vaultapi.LoadCACert(configFile.vaultCaCert)
+	}
+
 	return client, nil
 }
 
 type ConfigFromFile struct {
-	vaultAddr  string
-	vaultToken string
+	vaultAddr   string
+	vaultToken  string
+	vaultCaCert string
 }
 
 func (c *Cmd) GetConfig() *ConfigFromFile {
@@ -98,6 +103,7 @@ func (c *Cmd) GetConfig() *ConfigFromFile {
 	vaultTokenStr := fmt.Sprintf("%s.vault_token", c.vault.env)
 	config.vaultAddr = viper.GetString(vaultAddrStr)
 	config.vaultToken = viper.GetString(vaultTokenStr)
+	config.vaultCaCert = viper.GetString("vault_cacert")
 
 	return config
 }
