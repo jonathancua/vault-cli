@@ -2,6 +2,7 @@ package commands
 
 import (
 	"crypto/tls"
+	"os"
 
 	vaultapi "github.com/hashicorp/vault/api"
 )
@@ -45,10 +46,12 @@ func (c *Cmd) TokenAuth() (*vaultapi.TokenAuth, error) {
 // and the method is related to vault
 func (c *Cmd) Client() (*vaultapi.Client, error) {
 	config := vaultapi.DefaultConfig()
+	config.ReadEnvironment()
+
 	vsl := c.vault
 	vsl.tlsConfig = new(tls.Config)
 
-	if vsl.address != "" {
+	if vsl.address != "" && os.Getenv("VAULT_ADDR") == "" {
 		config.Address = c.vault.address
 	}
 
