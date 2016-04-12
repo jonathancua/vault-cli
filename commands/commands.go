@@ -47,11 +47,12 @@ func Init(name, version string) *Cmd {
 
 	c.initSys()
 	c.initTokenAuth()
+	c.initInfo()
 
 	versionCmd := &cobra.Command{
 		Use:   "version",
-		Short: "Print version information",
-		Long:  "Print version information",
+		Short: "Print version information.",
+		Long:  "Print version information.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			fmt.Printf("%s %s\n", name, version)
 			return nil

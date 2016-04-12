@@ -44,6 +44,15 @@ func (c *Cmd) TokenAuth() (*vaultapi.TokenAuth, error) {
 	return vault.Auth().Token(), nil
 }
 
+func (c *Cmd) Info() (*vaultapi.Client, error) {
+	vault, err := c.Client()
+	if err != nil {
+		return nil, err
+	}
+
+	return vault, err
+}
+
 // Note how I added a method for the Cmd type,
 // and the method is related to vault
 func (c *Cmd) Client() (*vaultapi.Client, error) {
