@@ -36,11 +36,9 @@ func Init(name, version string) *Cmd {
 		},
 	}
 
-	c.root.PersistentFlags().StringVar(&c.vault.env, "env", "qa", "default environment")
-
-	// TODO: change this to https
-	c.root.PersistentFlags().StringVar(&c.vault.address, "vault", "http://127.0.0.1:8200", "Vault address:port")
-	c.root.PersistentFlags().BoolVar(&c.vault.sslVerify, "ssl-verify", true, "Verify certificates when connecting via SSL")
+	c.root.PersistentFlags().StringVar(&c.vault.env, "env", "stage", "default environment")
+	c.root.PersistentFlags().StringVar(&c.vault.address, "vault", "", "Vault address:port")
+	c.root.PersistentFlags().BoolVar(&c.vault.sslSkipVerify, "ssl-verify", true, "Verify certificates when connecting via SSL")
 	c.root.PersistentFlags().StringVar(&c.vault.sslClientCert, "ssl-client-cert", "", "Path to an SSL client certificate for authentication")
 	c.root.PersistentFlags().StringVar(&c.vault.sslClientKey, "ssl-client-key", "", "Path to an SSL client certificate key for authentication")
 	c.root.PersistentFlags().StringVar(&c.vault.sslCaCert, "ssl-ca-cert", "", "CA certificate file to validate the vault server")

@@ -2,9 +2,11 @@ package commands
 
 import (
 	"crypto/tls"
+	"fmt"
 	"os"
 
 	vaultapi "github.com/hashicorp/vault/api"
+	"github.com/spf13/viper"
 )
 
 type vault struct {
@@ -15,7 +17,7 @@ type vault struct {
 	sslCaPath     string
 	sslClientCert string
 	sslClientKey  string
-	sslVerify     bool
+	sslSkipVerify bool
 	token         string
 	tlsConfig     *tls.Config
 }
@@ -47,25 +49,57 @@ func (c *Cmd) TokenAuth() (*vaultapi.TokenAuth, error) {
 func (c *Cmd) Client() (*vaultapi.Client, error) {
 	config := vaultapi.DefaultConfig()
 	config.ReadEnvironment()
+	configFile := c.GetConfig()
 
 	vsl := c.vault
 	vsl.tlsConfig = new(tls.Config)
 
-	if vsl.address != "" && os.Getenv("VAULT_ADDR") == "" {
+	// hierarchy to check for the vault address:
+	//  file, environment variable, flag
+	config.Address = configFile.vaultAddr
+	if os.Getenv("VAULT_ADDR") != "" {
+		fmt.Println("Found VAULT_ADDR variable, using it")
+		config.Address = os.Getenv("VAULT_ADDR")
+	}
+	if vsl.address != "" {
 		config.Address = c.vault.address
 	}
 
 	client, err := vaultapi.NewClient(config)
-
 	if err != nil {
 		return nil, err
 	}
 
-	if vsl.token != "" {
-		client.SetToken(vsl.token)
+	clientToken := configFile.vaultToken
+	if os.Getenv("VAULT_TOKEN") != "" {
+		fmt.Println("Found VAULT_TOKEN  variable, using it")
+		clientToken = os.Getenv("VAULT_TOKEN")
 	}
+	if vsl.token != "" {
+		clientToken = vsl.token
+	}
+	client.SetToken(clientToken)
 
 	return client, nil
+}
+
+type ConfigFromFile struct {
+	vaultAddr  string
+	vaultToken string
+}
+
+func (c *Cmd) GetConfig() *ConfigFromFile {
+	config := &ConfigFromFile{}
+	viper.SetConfigName(".vault-cli")
+	viper.AddConfigPath("$HOME")
+	viper.ReadInConfig()
+
+	vaultAddrStr := fmt.Sprintf("%s.vault_addr", c.vault.env)
+	vaultTokenStr := fmt.Sprintf("%s.vault_token", c.vault.env)
+	config.vaultAddr = viper.GetString(vaultAddrStr)
+	config.vaultToken = viper.GetString(vaultTokenStr)
+
+	return config
 }
 
 func NewVault() *vault {
