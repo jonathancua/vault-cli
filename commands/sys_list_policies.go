@@ -8,7 +8,7 @@ import (
 
 func (s *Sys) AddListPoliciesSub(c *cobra.Command) {
 	cmd := &cobra.Command{
-		Use:   "policies",
+		Use:   "list-policies",
 		Short: "Lists all the available policies.",
 		Long:  "Lists all the available policies.",
 		RunE: func(cmd *cobra.Command, args []string) error {

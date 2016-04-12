@@ -1,6 +1,10 @@
 package commands
 
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 type Sys struct {
 	*Cmd
@@ -19,10 +23,22 @@ func (root *Cmd) initSys() {
 	}
 
 	s.AddInitStatusSub(sysCmd)
+	s.AddGetPolicySub(sysCmd)
 	s.AddLeaderSub(sysCmd)
 	s.AddListAuthSub(sysCmd)
 	s.AddListAuditSub(sysCmd)
 	s.AddListMountsSub(sysCmd)
 	s.AddListPoliciesSub(sysCmd)
 	s.AddSealStatusSub(sysCmd)
+}
+
+func (s *Sys) CheckArgs(args []string) error {
+	switch {
+	case len(args) == 0:
+		return fmt.Errorf("Policy must be specified")
+	case len(args) > 1:
+		return fmt.Errorf("Only one token allowed")
+	}
+
+	return nil
 }
