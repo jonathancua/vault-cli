@@ -24,6 +24,7 @@ func (root *Cmd) initSys() {
 
 	s.AddInitStatusSub(sysCmd)
 	s.AddGetPolicySub(sysCmd)
+	s.AddKeyStatusSub(sysCmd)
 	s.AddLeaderSub(sysCmd)
 	s.AddListAuthSub(sysCmd)
 	s.AddListAuditSub(sysCmd)
