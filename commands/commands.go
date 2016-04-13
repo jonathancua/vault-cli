@@ -45,9 +45,10 @@ func Init(name, version string) *Cmd {
 	c.root.PersistentFlags().StringVar(&c.vault.sslCaPath, "ssl-ca-path", "", "Path to a CA certificate file")
 	c.root.PersistentFlags().StringVar(&c.vault.token, "token", "", "The Vault token")
 
+	c.initInfo()
+	c.initLogical()
 	c.initSys()
 	c.initTokenAuth()
-	c.initInfo()
 
 	versionCmd := &cobra.Command{
 		Use:   "version",

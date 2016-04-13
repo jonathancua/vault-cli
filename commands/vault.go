@@ -22,6 +22,24 @@ type vault struct {
 	tlsConfig     *tls.Config
 }
 
+func (c *Cmd) Info() (*vaultapi.Client, error) {
+	vault, err := c.Client()
+	if err != nil {
+		return nil, err
+	}
+
+	return vault, err
+}
+
+func (c *Cmd) Logical() (*vaultapi.Logical, error) {
+	vault, err := c.Client()
+	if err != nil {
+		return nil, err
+	}
+
+	return vault.Logical(), nil
+}
+
 // Because Client type has Sys() method which return Sys type
 func (c *Cmd) Sys() (*vaultapi.Sys, error) {
 	vault, err := c.Client()
@@ -42,15 +60,6 @@ func (c *Cmd) TokenAuth() (*vaultapi.TokenAuth, error) {
 	}
 
 	return vault.Auth().Token(), nil
-}
-
-func (c *Cmd) Info() (*vaultapi.Client, error) {
-	vault, err := c.Client()
-	if err != nil {
-		return nil, err
-	}
-
-	return vault, err
 }
 
 // Note how I added a method for the Cmd type,

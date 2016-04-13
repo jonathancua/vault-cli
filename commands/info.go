@@ -31,6 +31,5 @@ func (i *Info) infoResult(args []string) error {
 	}
 
 	spew.Dump(info)
-
 	return nil
 }
