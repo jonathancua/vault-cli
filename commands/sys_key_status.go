@@ -1,10 +1,6 @@
 package commands
 
-import (
-	"log"
-
-	"github.com/spf13/cobra"
-)
+import "github.com/spf13/cobra"
 
 func (s *Sys) AddKeyStatusSub(c *cobra.Command) {
 	cmd := &cobra.Command{
@@ -22,12 +18,12 @@ func (s *Sys) AddKeyStatusSub(c *cobra.Command) {
 func (s *Sys) KeyStatus(args []string) error {
 	sys, err := s.Sys()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	result, err := sys.KeyStatus()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	return s.Output(result)

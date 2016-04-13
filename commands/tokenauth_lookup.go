@@ -1,10 +1,6 @@
 package commands
 
-import (
-	"log"
-
-	"github.com/spf13/cobra"
-)
+import "github.com/spf13/cobra"
 
 // If you do c.AddCommand(), it will be a subcommand to tokenauth.
 // If you do t.AddCommand(), it will be a root command.
@@ -36,7 +32,7 @@ func (t *TokenAuth) Lookup(args []string) error {
 
 	lookup, err := token.Lookup(args[0])
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	return t.Output(lookup)
 }
