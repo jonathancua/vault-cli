@@ -23,6 +23,7 @@ func (root *Cmd) initLogical() {
 	}
 
 	l.AddReadSub(cmd)
+	l.AddListSub(cmd)
 }
 
 func (l *Logical) CheckArgs(args []string) error {
