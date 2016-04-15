@@ -13,7 +13,7 @@ type Sys struct {
 func (root *Cmd) initSys() {
 	s := Sys{Cmd: root}
 
-	sysCmd := &cobra.Command{
+	cmd := &cobra.Command{
 		Use:   "sys",
 		Short: "Vault /sys endpoint interface",
 		Long:  "Vault /sys endpoint interface",
@@ -22,15 +22,15 @@ func (root *Cmd) initSys() {
 		},
 	}
 
-	s.AddInitStatusSub(sysCmd)
-	s.AddGetPolicySub(sysCmd)
-	s.AddKeyStatusSub(sysCmd)
-	s.AddLeaderSub(sysCmd)
-	s.AddListAuthSub(sysCmd)
-	s.AddListAuditSub(sysCmd)
-	s.AddListMountsSub(sysCmd)
-	s.AddListPoliciesSub(sysCmd)
-	s.AddSealStatusSub(sysCmd)
+	s.AddInitStatusSub(cmd)
+	s.AddGetPolicySub(cmd)
+	s.AddKeyStatusSub(cmd)
+	s.AddLeaderSub(cmd)
+	s.AddListAuthSub(cmd)
+	s.AddListAuditSub(cmd)
+	s.AddListMountsSub(cmd)
+	s.AddListPoliciesSub(cmd)
+	s.AddSealStatusSub(cmd)
 }
 
 func (s *Sys) CheckArgs(args []string) error {

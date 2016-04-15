@@ -13,7 +13,7 @@ type TokenAuth struct {
 func (root *Cmd) initTokenAuth() {
 	t := TokenAuth{Cmd: root}
 
-	tokenCmd := &cobra.Command{
+	cmd := &cobra.Command{
 		Use:   "token-auth",
 		Short: "Vault /tokenauth endpoint interface",
 		Long:  "Vault /tokenauth endpoint interface",
@@ -22,8 +22,8 @@ func (root *Cmd) initTokenAuth() {
 		},
 	}
 
-	t.AddLookupSub(tokenCmd)
-	t.AddCommand(tokenCmd)
+	t.AddLookupSub(cmd)
+	t.AddCommand(cmd)
 }
 
 func (t *TokenAuth) CheckArgs(args []string) error {
