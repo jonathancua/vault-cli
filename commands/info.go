@@ -1,7 +1,8 @@
 package commands
 
 import (
-	"github.com/davecgh/go-spew/spew"
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -29,7 +30,8 @@ func (i *Info) infoResult(args []string) error {
 	if err != nil {
 		return err
 	}
+	fmt.Printf("address: %s\n", i.vault.address)
+	fmt.Printf("token: %s\n", info.Token())
 
-	spew.Dump(info)
 	return nil
 }

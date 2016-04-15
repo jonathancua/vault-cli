@@ -83,6 +83,9 @@ func (c *Cmd) Client() (*vaultapi.Client, error) {
 		config.Address = c.vault.address
 	}
 
+	// save final value so I can use it for infoResult method
+	c.vault.address = config.Address
+
 	client, err := vaultapi.NewClient(config)
 	if err != nil {
 		return nil, err
@@ -90,7 +93,7 @@ func (c *Cmd) Client() (*vaultapi.Client, error) {
 
 	clientToken := configFile.vaultToken
 	if os.Getenv("VAULT_TOKEN") != "" {
-		fmt.Println("Found VAULT_TOKEN  variable, using it")
+		fmt.Println("Found VAULT_TOKEN variable, using it")
 		clientToken = os.Getenv("VAULT_TOKEN")
 	}
 	if vsl.token != "" {
