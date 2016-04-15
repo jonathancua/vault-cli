@@ -1,6 +1,10 @@
 package commands
 
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 func (l *Logical) AddReadSub(c *cobra.Command) {
 	cmd := &cobra.Command{
@@ -30,5 +34,10 @@ func (l *Logical) Read(args []string) error {
 		return err
 	}
 
-	return l.Output(result.Data["value"])
+	if result == nil {
+		fmt.Printf("No value found at %s\n", args[0])
+		return nil
+	} else {
+		return l.Output(result.Data["value"])
+	}
 }
