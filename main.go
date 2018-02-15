@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/vault-cli/commands"
+	"github.com/jonathancua/vault-cli/commands"
 )
 
 const Name = "vault-cli"
